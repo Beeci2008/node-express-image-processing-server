@@ -3,7 +3,7 @@ const path = require('path')
 
 const app = express();
 
-const pathToIndex = path.resolve(__dirname, "../client/indext.html")
+const pathToIndex = path.resolve(__dirname, '../client/index.html')
 app.use('/*', function (request, response) {
     response.sendFile(pathToIndex);
 })
