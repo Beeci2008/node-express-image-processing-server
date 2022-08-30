@@ -8,4 +8,4 @@ gm(workerData.source)
 
     parentPort.postMessage({resized: true})
 
-  })
+  });

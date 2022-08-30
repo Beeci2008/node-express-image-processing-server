@@ -29,8 +29,8 @@ const imageProcessor = (filename) => {
 
 
 
-                const pathToMonochromeWorker = new Worker(pathToMonochromeWorker, )
-                workerData; {
+                const pathToMonochromeWorker = new Worker(pathToMonochromeWorker, {
+                workerData: {
                 source: sourcePath,
                 destination: monochromeDestination,
             },
@@ -73,16 +73,14 @@ const imageProcessor = (filename) => {
             } catch (error){
                 reject(error);
 
-            });
+            }
 
         } else {
             reject(new Error('not on main thread'));
         }
 
         resolve();
-        }
-
-   
+    });
 };
 
 module.exports = imageProcessor;
