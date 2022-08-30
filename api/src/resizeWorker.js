@@ -6,6 +6,6 @@ gm(workerData.source)
   .write(workerData.destination, (error) => {
     if (error) throw error;
 
-    parentPort.postMessage({resize: true})
+    parentPort.postMessage({resized: true})
 
   })
