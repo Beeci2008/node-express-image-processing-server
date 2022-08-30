@@ -19,9 +19,10 @@ const fileFilter = (request, file, callback) => {
         request.fileValidationError = 'Wrong file type';
         callback(null, false, new Error('Wrong file type'));
     } else {
-        callback(null, true)
+        callback(null, true);
     }
-}
+};
+
 const upload = multer({
     fileFilter,
     storage,
@@ -35,10 +36,11 @@ router.post('/upload', upload.single('photo'), (request, response) => {
     }
     return response.status(201).json({
         success: true
-    })
-})
-router.get('/photo-viewer', (request, response)=> {
+    });
+});
+
+router.get('/photo-viewer', (request, response) => {
     response.sendFile(phoyoPath)
-} );
+});
 
 module.exports = router;
