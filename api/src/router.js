@@ -39,7 +39,7 @@ router.post('/upload', upload.single('photo'), (request, response) => {
 });
 
 router.get('/photo-viewer', (request, response) => {
-    response.sendFile(phoyoPath)
+    response.sendFile(photoPath)
 });
 
 module.exports = router;
