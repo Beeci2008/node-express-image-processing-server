@@ -46,8 +46,11 @@ const imageProcessor = (filename) => {
         resizeWorker.on('message', (message) => {
             resizeWorkerFinished = true;
 
-            resolve('resizeWorker finished processing');
+            if(monochromeWorkerFinished){
+                resolve('resizeWorker finished processing');
 
+            }
+           
         });
 
               resizeWorker.on('error' ,(error) => {
@@ -84,7 +87,7 @@ const imageProcessor = (filename) => {
                     resolve('monochromeWorker finished processing');
                 }
 
-              })
+              });
 
             } catch (error){
                 reject(error);
@@ -95,7 +98,7 @@ const imageProcessor = (filename) => {
             reject(new Error('not on main thread'));
         }
 
-        resolve();
+        
     });
 };
 
