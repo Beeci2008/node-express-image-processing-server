@@ -1,22 +1,29 @@
 const { resolve } = require('path');
 const path = require('path');
 const { reject } = require('ramda');
-const {Worker, isMainThread, workerData} = require('worker_threads');
+const {Worker, isMainThread} = require('worker_threads');
 
 const resizeWorkerFinished = false;
 const monochromeWorkerFinished = false;
 
 
 const pathToResizeWorker = path.resolve(__dirname, 'resizeWorker.js')
-const pathToMonochromeWorker = (filename) => {
+const pathToMonochromeWorker =  path.resolve(__dirname, 'monochromeWorker.js')
 
-    return path.resolve(__dirname, '../uploads', filename);
-};
+const uploadPathResolver = (filename) => {
+    return path.resolve(__dirname, '../upload', filename)
+
+}
+
 
 const imageProcessor = (filename) => {
+    const resizeWorkerFinished = false;
+    const monochromeWorkerFinished = false;
+
     const sourcePath = uploadPathResolver(filename)
     const resizedDestination = uploadPathResolver('resized-'+ filename)
-    const monochromeDestination = uploadPathResolver('monochrome-')
+    const monochromeDestination = uploadPathResolver('monochrome-'+ filename)
+
     return new Promise((resolve, reject) => {
         if (isMainThread) {
             try {
@@ -29,7 +36,7 @@ const imageProcessor = (filename) => {
 
 
 
-                const pathToMonochromeWorker = new Worker(pathToMonochromeWorker, {
+                const monochromeWorker = new Worker(pathToMonochromeWorker, {
                 workerData: {
                 source: sourcePath,
                 destination: monochromeDestination,
@@ -69,6 +76,15 @@ const imageProcessor = (filename) => {
                     reject(new Error('Exited with status code' + code ));
                 }
               });
+
+              monochromeWorker.on('message', (message) =>{
+                monochromeWorkerFinished = true
+
+                if(resizeWorkerFinished){
+                    resolve('monochromeWorker finished processing');
+                }
+
+              })
 
             } catch (error){
                 reject(error);

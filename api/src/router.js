@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const multer = require('multer');
 const imageProcessor = require('./imageProcessor');
-const path = require('path')
+
 
 const photoPath = path.resolve(__dirname, '../../client/photo-viewer.html')
 
@@ -39,7 +39,7 @@ router.post('/upload', upload.single('photo'), async (request, response) => {
         await imageProcessor(request.file.filename)
 
     } catch{
-        
+
     }
     return response.status(201).json({
         success: true
