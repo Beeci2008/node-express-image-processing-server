@@ -11,7 +11,7 @@ const pathToResizeWorker = path.resolve(__dirname, 'resizeWorker.js')
 const pathToMonochromeWorker =  path.resolve(__dirname, 'monochromeWorker.js')
 
 const uploadPathResolver = (filename) => {
-    return path.resolve(__dirname, '../upload', filename)
+    return path.resolve(__dirname, '../uploads', filename)
 
 }
 
